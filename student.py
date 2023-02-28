@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+import requests
 
 class Student:
     """
@@ -16,3 +17,25 @@ class Student:
     @property
     def full_name(self):
         return f"{self._first_name} {self._last_name}"
+    
+
+    @property
+    def email(self):
+        return f"{self._first_name}_{self._last_name}@email.com".lower()
+    
+
+    def alert_santa(self):
+        self.naughty_list = True
+
+
+    def apply_extension(self, num):
+        self.end_date = self.end_date + timedelta(days = num)
+
+
+    def course_schedule(self):
+        response = requests.get(f"http://company.com/course-schedule/{self._last_name}/{self._first_name}")
+
+        if response.ok:
+            return response.text
+        else:
+            return "Something went wrong with the request!"
